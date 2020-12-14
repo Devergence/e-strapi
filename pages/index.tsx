@@ -2,10 +2,11 @@ import style from '../styles/Home.module.css';
 import fetch from 'isomorphic-unfetch';
 import {IProduct} from "../interfaces";
 
-export default function Home({products}: Array<IProduct>) {
+export default function Home(props: { products:IProduct[] }) {
+  const { products } = props;
   return (
     <div className={style.container}>
-     <h1>Hello!</h1>
+     <h1>{products[0].meta_description}</h1>
     </div>
   )
 }
