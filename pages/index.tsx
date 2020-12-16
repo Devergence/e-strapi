@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import Head from "next/head"
+import {Header} from "../components/Header";
 
 const Home: FC = () => {
   return (
@@ -9,6 +10,7 @@ const Home: FC = () => {
      </Head>
 
       <main>
+        <Header/>
         <h1>Hello</h1>
       </main>
     </>
