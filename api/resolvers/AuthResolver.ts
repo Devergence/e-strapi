@@ -31,4 +31,30 @@ export class AuthResolver {
 
     return  { user, token }
   }
+
+  @Mutation(() => UserResponce)
+  async login(@Arg('input'){ email, password}: AuthInput): Promise<UserResponce> {
+    // 1. Check for an exsisting email
+    const existingUser = await UserModel.findOne({ email });
+
+    if(!existingUser) {
+      throw new Error('Invalid login')
+    }
+
+    // 2. Check if password is valid
+    const valid = await bcrypt.compare(password, existingUser.password);
+
+    if(!valid) {
+      throw new Error('Invalid login')
+    }
+
+    // 3. store userId on the token payload
+    const payload = {
+      id: existingUser.id
+    }
+
+    const token = jwt.sign(payload, process.env. SESSION_SECRET || "fsjgkdfjhdfh")
+
+    return  { user: existingUser, token }
+  }
 }
